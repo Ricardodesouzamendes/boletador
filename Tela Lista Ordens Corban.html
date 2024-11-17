@@ -94,8 +94,8 @@
         <div class="search-box">
             <select id="corban" required>
                 <option value="" disabled selected>Selecione o Corban</option>
-                <option value="Efex Finance">Efex Finance</option>
-                <option value="Trace Finance">Trace Finance</option>
+                <option value="xpto Finance">xpto Finance</option>
+                <option value="xpto2 Finance">xpto2 Finance</option>
             </select>
 
             <select id="cliente" required>
@@ -162,7 +162,7 @@
     <script>
         const mockData = Array.from({ length: 100 }, (_, i) => ({
             boletoNumero: `B${1000 + i}`,
-            corban: i % 2 === 0 ? "Efex Finance" : "Trace Finance",
+            corban: i % 2 === 0 ? "xpto Finance" : "xpto2 Finance",
             cliente: `Cliente ${i % 4 + 1}`,
             enviado: `2024-11-${String(i % 30 + 1).padStart(2, '0')} 12:${String(i % 60).padStart(2, '0')}`,
             finalidade: i % 2 === 0 ? "Compra" : "Venda",
