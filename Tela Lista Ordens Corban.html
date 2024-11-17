@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico das Ordens</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .search-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .search-box select,
+        .search-box input {
+            padding: 8px;
+            width: 14%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-box input[type="date"] {
+            width: 16%;
+        }
+        .search-box button {
+            padding: 8px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .search-box button:hover {
+            background-color: #0056b3;
+        }
+        .results {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .results th, .results td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            font-size: 12px;
+        }
+        .results th {
+            background-color: #f4f4f4;
+            cursor: pointer;
+        }
+        .results th:hover {
+            background-color: #ddd;
+        }
+        .pagination {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .pagination button {
+            padding: 8px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .pagination button:hover {
+            background-color: #0056b3;
+        }
+        .pagination button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Histórico das Ordens</h1>
+
+        <!-- Caixa de pesquisa -->
+        <div class="search-box">
+            <select id="corban" required>
+                <option value="" disabled selected>Selecione o Corban</option>
+                <option value="Efex Finance">Efex Finance</option>
+                <option value="Trace Finance">Trace Finance</option>
+            </select>
+
+            <select id="cliente" required>
+                <option value="" disabled selected>Selecione o Cliente</option>
+                <option value="Cliente 1">Cliente 1</option>
+                <option value="Cliente 2">Cliente 2</option>
+                <option value="Cliente 3">Cliente 3</option>
+                <option value="Cliente 4">Cliente 4</option>
+            </select>
+
+            <select id="finalidade" required>
+                <option value="" disabled selected>Selecione a Finalidade</option>
+                <option value="Compra">Compra</option>
+                <option value="Venda">Venda</option>
+            </select>
+
+            <select id="modalidade" required>
+                <option value="" disabled selected>Selecione a Modalidade</option>
+                <option value="EFX">EFX</option>
+                <option value="Importação">Importação</option>
+                <option value="Exportação">Exportação</option>
+                <option value="NDF">NDF</option>
+            </select>
+			    
+            <input id="dataDe" placeholder="Valor operação de" required>
+            <input id="dataAte" placeholder="Valor operação até" required>
+
+            <input type="date" id="dataDe" placeholder="Data de" required>
+            <input type="date" id="dataAte" placeholder="Data até" required>
+
+            <button id="pesquisar">Pesquisar</button>
+        </div>
+		<p style="color: red;">Quando o login for do corban nao deixar selecionar e listar outros corbans, inibir a selação, se for o caso em um t0 antes de ter um RBAC efetivo vamos duplicar codigos; Quando status doc diferente de ok ter opção de enviar o documento</p>
+
+        <!-- Tabela de resultados -->
+        <table class="results" id="resultTable">
+            <thead>
+                <tr>
+                    <th data-sort="boletoNumero">Boleto Número</th>
+                    <th data-sort="corban">Corban</th>
+                    <th data-sort="cliente">Cliente</th>
+                    <th data-sort="enviado">Enviado</th>
+                    <th data-sort="finalidade">Finalidade</th>
+                    <th data-sort="moeda">Moeda</th>
+                    <th data-sort="modalidade">Modalidade</th>
+                    <th data-sort="pagamento">Pagamento</th>
+                    <th data-sort="recebimento">Recebimento</th>
+                    <th data-sort="valorOperacao">Valor Operação</th>
+                    <th data-sort="statusDoc">Status Doc</th>
+                    <th data-sort="statusOperacao">Status Operação</th>
+                </tr>
+            </thead>
+            <tbody id="resultBody">
+                <!-- Resultados da pesquisa serão inseridos aqui -->
+            </tbody>
+        </table>
+
+        <!-- Paginação -->
+        <div class="pagination" id="pagination">
+            <!-- Botões de paginação serão gerados dinamicamente -->
+        </div>
+    </div>
+
+    <script>
+        const mockData = Array.from({ length: 100 }, (_, i) => ({
+            boletoNumero: `B${1000 + i}`,
+            corban: i % 2 === 0 ? "Efex Finance" : "Trace Finance",
+            cliente: `Cliente ${i % 4 + 1}`,
+            enviado: `2024-11-${String(i % 30 + 1).padStart(2, '0')} 12:${String(i % 60).padStart(2, '0')}`,
+            finalidade: i % 2 === 0 ? "Compra" : "Venda",
+            moeda: i % 2 === 0 ? "BRL" : "USD",
+            modalidade: ["EFX", "Importação", "Exportação", "NDF"][i % 4],
+            pagamento: `2024-12-${String(i % 30 + 1).padStart(2, '0')}`,
+            recebimento: `2024-12-${String(i % 30 + 2).padStart(2, '0')}`,
+            valorOperacao: (Math.random() * (1000000 - 100000) + 100000).toFixed(2),
+            statusDoc: i % 3 === 0 ? "Pendente ACAM" : "Completo",
+            statusOperacao: ["Aberta", "Perdida"][i % 2]
+        }));
+
+        let currentSort = { key: "", order: "" };
+        const resultBody = document.getElementById("resultBody");
+        const pagination = document.getElementById("pagination");
+        let currentPage = 1;
+        const resultsPerPage = 10;
+
+        function renderResults(data, page = 1) {
+            resultBody.innerHTML = "";
+            const startIndex = (page - 1) * resultsPerPage;
+            const endIndex = startIndex + resultsPerPage;
+            const paginatedData = data.slice(startIndex, endIndex);
+
+            paginatedData.forEach(item => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${item.boletoNumero}</td>
+                    <td>${item.corban}</td>
+                    <td>${item.cliente}</td>
+                    <td>${item.enviado}</td>
+                    <td>${item.finalidade}</td>
+                    <td>${item.moeda}</td>
+                    <td>${item.modalidade}</td>
+                    <td>${item.pagamento}</td>
+                    <td>${item.recebimento}</td>
+                    <td>R$ ${parseFloat(item.valorOperacao).toLocaleString("pt-BR")}</td>
+                    <td>${item.statusDoc}</td>
+                    <td>${item.statusOperacao}</td>
+                `;
+                resultBody.appendChild(row);
+            });
+
+            renderPagination(data.length, page);
+        }
+
+        function renderPagination(totalResults, page) {
+            pagination.innerHTML = "";
+            const totalPages = Math.ceil(totalResults / resultsPerPage);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement("button");
+                button.textContent = i;
+                button.disabled = i === page;
+                button.addEventListener("click", () => {
+                    currentPage = i;
+                    renderResults(mockData, currentPage);
+                });
+                pagination.appendChild(button);
+            }
+        }
+
+        document.querySelectorAll("th[data-sort]").forEach(th => {
+            th.addEventListener("click", () => {
+                const key = th.getAttribute("data-sort");
+                currentSort.order = currentSort.key === key && currentSort.order === "asc" ? "desc" : "asc";
+                currentSort.key = key;
+
+                mockData.sort((a, b) => {
+                    const compareA = isNaN(a[key]) ? a[key] : parseFloat(a[key]);
+                    const compareB = isNaN(b[key]) ? b[key] : parseFloat(b[key]);
+
+                    if (currentSort.order === "asc") return compareA > compareB ? 1 : -1;
+                    return compareA < compareB ? 1 : -1;
+                });
+
+                renderResults(mockData, currentPage);
+            });
+        });
+
+        renderResults(mockData, currentPage);
+    </script>
+</body>
+</html>

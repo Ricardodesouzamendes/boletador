@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBC - Visão do Corban</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            width: 350px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>SBC - Visão do Corban</h1>
+        <form id="loginForm">
+            <label for="email">Usuário (E-mail):</label>
+            <input type="text" id="email" placeholder="Digite seu e-mail" required>
+            
+            <label for="password">Senha:</label>
+            <input type="password" id="password" placeholder="Digite sua senha" required>
+            
+            <div class="error" id="errorMessage"></div>
+            
+            <button type="submit">Login</button>
+        </form>
+		<p style="color: red;"">Mock preencha com qualquer email e qq valor de senha. O login será pelo user e senha do Entra ID/Azure AD</p>
+    </div>
+
+    <script>
+        // Referências aos elementos
+        const form = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Função para validar o formato de e-mail
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Validação e submissão do formulário
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (!isValidEmail(email)) {
+                errorMessage.textContent = 'Por favor, insira um e-mail válido.';
+                return;
+            }
+
+            if (password === '') {
+                errorMessage.textContent = 'Por favor, preencha o campo de senha.';
+                return;
+            }
+
+            errorMessage.textContent = ''; // Limpa mensagens de erro
+
+            // Redireciona para index.html (mock)
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

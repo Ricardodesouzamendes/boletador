@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD de Precificação de Câmbio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">CRUD de Precificação de Câmbio</h1>
+        
+        <!-- Formulário para criar/editar uma precificação -->
+        <form method="POST" action="/precificacao" id="precificacao-form">
+            <h2>Nova Precificação</h2>
+            <div class="mb-3">
+                <label for="corban_id" class="form-label">Corban</label>
+                <select name="corban_id" id="corban_id" class="form-control" required>
+                    <!-- Dados de Corban preenchidos dinamicamente -->
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="cliente_id" class="form-label">Cliente</label>
+                <select name="cliente_id" id="cliente_id" class="form-control">
+                    <!-- Dados de Clientes preenchidos dinamicamente -->
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="finalidade_boleta_id" class="form-label">Finalidade da Boleta</label>
+                <select name="finalidade_boleta_id" id="finalidade_boleta_id" class="form-control" required>
+                    <!-- Dados de Finalidade preenchidos dinamicamente -->
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="modalidade_boleta_id" class="form-label">Modalidade da Boleta</label>
+                <select name="modalidade_boleta_id" id="modalidade_boleta_id" class="form-control" required>
+                    <!-- Dados de Modalidade preenchidos dinamicamente -->
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="taxa_comercial_id" class="form-label">Taxa Comercial</label>
+                <select name="taxa_comercial_id" id="taxa_comercial_id" class="form-control" required>
+                    <!-- Dados de Taxa Comercial preenchidos dinamicamente -->
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="spread_id" class="form-label">Spread</label>
+                <select name="spread_id" id="spread_id" class="form-control" required>
+                    <!-- Dados de Spread preenchidos dinamicamente -->
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="moeda" class="form-label">Moeda</label>
+                <input type="text" name="moeda" id="moeda" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="valor" class="form-label">Valor</label>
+                <input type="number" step="0.01" name="valor" id="valor" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="valor_em_reais" class="form-label">Valor em Reais</label>
+                <input type="number" step="0.01" name="valor_em_reais" id="valor_em_reais" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="data_pagamento" class="form-label">Data do Pagamento</label>
+                <select name="data_pagamento" id="data_pagamento" class="form-control" required>
+                    <option value="D0">D0</option>
+                    <option value="D1">D1</option>
+                    <option value="D2">D2</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="data_recebimento" class="form-label">Data do Recebimento</label>
+                <select name="data_recebimento" id="data_recebimento" class="form-control" required>
+                    <option value="D0">D0</option>
+                    <option value="D1">D1</option>
+                    <option value="D2">D2</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="observacao" class="form-label">Observação</label>
+                <textarea name="observacao" id="observacao" class="form-control"></textarea>
+            </div>
+            <button type="reset" class="btn btn-secondary">Limpar</button>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+
+        <!-- Tabela para exibir precificações -->
+        <h2 class="mt-5">Precificações</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Corban</th>
+                    <th>Cliente</th>
+                    <th>Finalidade</th>
+                    <th>Modalidade</th>
+                    <th>Moeda</th>
+                    <th>Valor</th>
+                    <th>Valor em Reais</th>
+                    <th>Data Pagamento</th>
+                    <th>Data Recebimento</th>
+                    <th>Taxa Comercial</th>
+                    <th>Spread</th>
+                    <th>Observação</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Precificações preenchidas dinamicamente -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

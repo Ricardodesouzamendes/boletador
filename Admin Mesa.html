@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Opções da Mesa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .checkbox-group label {
+            margin-right: 10px;
+            flex: 1;
+        }
+        .listbox {
+            margin-right: 10px;
+        }
+        textarea {
+            width: 100%;
+            resize: none;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .switch {
+            display: flex;
+            align-items: center;
+        }
+        .switch input[type="checkbox"] {
+            display: none;
+        }
+        .switch label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .switch span {
+            width: 40px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 10px;
+            position: relative;
+            margin-right: 10px;
+        }
+        .switch span::after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: 0.3s;
+        }
+        .switch input[type="checkbox"]:checked + label span {
+            background-color: #007BFF;
+        }
+        .switch input[type="checkbox"]:checked + label span::after {
+            left: 22px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin - Opções da Mesa</h1>
+        <form id="adminForm" action="https://postman-echo.com/post" method="post" target="_blank">
+            <div class="form-group">
+                <label>Dias da Semana</label>
+                <div id="days"></div>
+            </div>
+            <div class="form-group">
+                <div class="switch">
+                    <input type="checkbox" id="orders" name="orders">
+                    <label for="orders">
+                        <span></span>
+                        Liga/Desliga envio de Ordens Boleto
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="message">Mensagem</label>
+                <textarea id="message" name="message" rows="5" placeholder="Digite sua mensagem..."></textarea>
+            </div>
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+
+    <script>
+        // Gerar os dias da semana dinamicamente
+        const days = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"];
+        const daysContainer = document.getElementById('days');
+        days.forEach(day => {
+            const dayGroup = document.createElement('div');
+            dayGroup.classList.add('checkbox-group');
+            dayGroup.innerHTML = `
+                <input type="checkbox" id="${day}" name="${day}" value="${day}">
+                <label for="${day}">${day}</label>
+                <select class="listbox" name="${day}_open">
+                    <option value="">Abertura</option>
+                    ${Array.from({ length: 24 }, (_, i) => `<option value="${i}:00">${i}:00</option>`).join('')}
+                </select>
+                <select class="listbox" name="${day}_close">
+                    <option value="">Fechamento</option>
+                    ${Array.from({ length: 24 }, (_, i) => `<option value="${i}:00">${i}:00</option>`).join('')}
+                </select>
+            `;
+            daysContainer.appendChild(dayGroup);
+        });
+    </script>
+</body>
+</html>

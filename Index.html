@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Lateral com Submenus</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Estilo do menu lateral */
+        .sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: white;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed {
+            width: 70px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            padding: 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #495057;
+        }
+
+        .sidebar ul li:hover {
+            background-color: #495057;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar ul li a .icon {
+            margin-right: 10px;
+        }
+
+        .sidebar.collapsed ul li a .text {
+            display: none;
+        }
+
+        .sidebar ul li a .icon {
+            font-size: 20px;
+        }
+
+        .hamburger {
+            padding: 15px;
+            background-color: #343a40;
+            cursor: pointer;
+            text-align: center;
+            color: white;
+            border: none;
+            width: 100%;
+        }
+
+        /* Submenu */
+        .submenu {
+            display: none;
+            background-color: #495057;
+            padding-left: 20px;
+        }
+
+        .submenu li {
+            border: none;
+        }
+
+        .sidebar ul li.open > .submenu {
+            display: block;
+        }
+
+        /* Estilo do conteúdo */
+        .content {
+            margin-left: 250px;
+            flex-grow: 1;
+            transition: margin-left 0.3s;
+            overflow: auto;
+        }
+
+        .content.collapsed {
+            margin-left: 70px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu lateral -->
+    <div class="sidebar" id="sidebar">
+        <button class="hamburger" id="hamburger">☰</button>
+        <ul>
+            <li><a href="Home.html" target="contentFrame"><span class="icon">🏠</span><span class="text">Home</span></a></li>
+            <li><a href="Boletador prototipo.html" target="contentFrame"><span class="icon">📄</span><span class="text">Boletador Câmbio</span></a></li>
+            <li><a href="Tela Lista Ordens Corban.html" target="contentFrame"><span class="icon">📜</span><span class="text">Lista Ordens/Boletos</span></a></li>
+            <li class="has-submenu">
+                <a href="#"><span class="icon">🛠️</span><span class="text">Admin (Somente interno)</span></a>
+                <ul class="submenu">
+                    <li><a href="Admin Mesa.html" target="contentFrame"><span class="icon">⚙️</span><span class="text">Admin Mesa</span></a></li>
+                    <li><a href="Admin Users.html" target="contentFrame"><span class="icon">👥</span><span class="text">Admins Users</span></a></li>
+					<li><a href="Motor precificacao.html" target="contentFrame"><span class="icon">⚙️</span><span class="text">Motor precificação</span></a></li>
+					<li><a href="Validacao ACAMs.html" target="contentFrame"><span class="icon">⚙️</span><span class="text">Validação ACAMs</span></a></li>
+                </ul>
+            </li>
+            <li><a href="#" onclick="window.location.href='Login.html';"><span class="icon">🚪</span><span class="text">Logout</span></a></li>
+        </ul>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="content" id="content">
+        <iframe src="Home.html" name="contentFrame"></iframe>
+    </div>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('content');
+        const hamburger = document.getElementById('hamburger');
+        const submenuItems = document.querySelectorAll('.has-submenu');
+
+        // Adiciona funcionalidade para recolher/expandir o menu lateral
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            content.classList.toggle('collapsed');
+        });
+
+        // Adiciona funcionalidade para abrir/fechar submenus
+        submenuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('open');
+            });
+        });
+    </script>
+</body>
+</html>
