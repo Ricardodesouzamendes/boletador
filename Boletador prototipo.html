@@ -3,10 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-	
     <title>Boletador</title>
     <style>
         body {
@@ -330,6 +326,8 @@
             const spreadValor = document.getElementById('spreadValor').value;
             const taxa = document.getElementById('taxa').value;
             const valorOperacao = document.getElementById('valorOperacao').value;
+			const dataPagamento = document.getElementById('dataPagamento').value;
+			const dataRecebimento = document.getElementById('dataRecebimento').value;
 
             const resumoHTML = `
                 <p>Corban: ${corban}</p>
@@ -344,6 +342,8 @@
                 <p>Spread Valor: ${spreadValor}</p>
                 <p>Taxa (BID): ${taxa}</p>
                 <p>Valor Operação: ${valorOperacao}</p>
+				<p>Data Pagamento: ${dataPagamento}</p>
+				<p>Data Recebimento: ${dataRecebimento}</p>
             `;
 
             document.getElementById('resumo').innerHTML = resumoHTML;
