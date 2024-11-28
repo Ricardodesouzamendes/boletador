@@ -134,7 +134,7 @@
 	<br>
     <div class="container">
         <form id="form1">
-            <h2>Boletador</h2>
+            <h4>Boletador</h4>
             <div class="inline-fields">
                 <div>
                     <label for="corban">Corban:</label>
@@ -213,12 +213,39 @@
                     <input type="text" id="spreadValor">
                 </div>
             </div>
+			<div class="inline-fields">
+                <div>
+                    <label for="dataPagamento">Data de Pagamento:</label>
+                    <select id="dataPagamento" onchange="updateDate('dataPagamento', 'dataPagamentoField')">
+                        <option value="D0">D0</option>
+                        <option value="D1">D1</option>
+                        <option value="D2">D2</option>
+                    </select>
+                    <input type="text" id="dataPagamentoField" disabled>
+                </div>
+                <div>
+                    <label for="dataRecebimento">Data de Recebimento:</label>
+                    <select id="dataRecebimento" onchange="updateDate('dataRecebimento', 'dataRecebimentoField')">
+                        <option value="D0">D0</option>
+                        <option value="D1">D1</option>
+                        <option value="D2">D2</option>
+                    </select>
+                    <input type="text" id="dataRecebimentoField" disabled>
+                </div>
+            </div>
+			    <script>
+        function updateDate(selectId, fieldId) {
+            const selectElement = document.getElementById(selectId);
+            const fieldElement = document.getElementById(fieldId);
+            fieldElement.value = selectElement.value;
+        }
+    </script>
 			<label for="anexo">Anexar documentos / ACAM220:</label>
             <input type="file" id="anexo" required>
         </form>
 
         <form id="form2">
-            <h2>Taxa (Cotação Online) </h2>
+            <h4>Taxa (Cotação Online) </h4>
             <label for="dataHora">Data e Hora:</label>
             <input type="text" id="dataHora" disabled>
             <label for="taxa">Taxa:</label>
